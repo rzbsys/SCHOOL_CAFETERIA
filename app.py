@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
-import secrets, hashlib, requests, os, json
+import secrets, hashlib, requests, os, json, certifi
 from pymongo import MongoClient
 from datetime import timedelta, datetime
 from oauthlib.oauth2 import WebApplicationClient
@@ -23,7 +23,10 @@ userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
 
 TOKEN_EXPIRE_TIME = 300
 #MongoDB 설정
-clientmg = MongoClient('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false')
+#나중에 IP추가
+ca = certifi.where()
+murl = 'mongodb+srv://admin:admin@cluster0.uzwiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+clientmg = MongoClient(murl, connect=False, tlsCAFile=ca)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
