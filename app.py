@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
-import secrets, hashlib, time, requests, os, json
+import secrets, hashlib, requests, os, json
 from pymongo import MongoClient
-from datetime import date, timedelta, datetime
+from datetime import timedelta, datetime
 from oauthlib.oauth2 import WebApplicationClient
 
 RANDOM_SECRET_KEY = secrets.token_urlsafe(16)
