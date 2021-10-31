@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식 관리 시스템</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/qr.css')}}">
+</head>
+<body>
+    <div class="body-frame">
+        <div class="block">
+            <h1 class="back-btn b3" onclick="javascript:location.href = '/logout';">←</h1>
+            <h1 class="b8 f6" style="margin-top: 20px;">QR코드를 카메라에<br>인식시켜 주세요.</h1>
+            <p style="color: grey; margin-top: 10px;">인식이 잘 되지 않을 경우 화면 밝기를 높혀주세요.</p>
+            <div class="qr-box shadow">
+                <div id="qrcode">
+                </div>
+                <h5 style="margin-top: 10px; color: rgb(146, 146, 146);">남은시간</h5>
+                <h1 class="left-time">로딩중</h1>
+            </div>
+            <button class="f2 b7" style="margin-top: 20px; margin-bottom: 20px;" onclick="javascript:refresh();">
+                <img src="{{url_for('static', filename='img/refresh-page-option.png')}}" style="height: 40%; filter: invert(1); margin-right: 10px;">
+                새로고침
+            </button>
+        </div>
+    </div>
+</body>
+    <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{url_for('static', filename='js/load.js')}}"></script>
+    <script src="{{url_for('static', filename='js/qr.js')}}"></script>
+    <script src="{{url_for('static', filename='js/qrcode.js')}}"></script>
+
+</html>

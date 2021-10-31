@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식 관리 시스템</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/glogin.css')}}">
+</head>
+<body>
+    <div class="body-frame">
+        <div class="block">
+            <h1 class="back-btn b3" onclick="javascript:location.href = '/logout';">←</h1>
+            <img src="{{url_for('static', filename='img/dshslogo.png')}}" width="70px" style="margin-top: 20px;">
+            <h1 class="b8 f6" style="margin-top: 20px;">구글 로그인을<br>진행해 주세요.</h1>
+            <p style="color: grey; margin-top: 10px; width: 80%;">본인인증을 위해 회원가입 후 최초 1회에 한하여 구글로그인을 필요로 합니다.</p>
+            
+            <div class="parell-scroll">
+                <div class="grid">
+
+                    <div class="card">
+                        <h1 style="color: var(--blue);">계정 도메인</h1>
+                        <p style="width: 100px; margin-top: 10px;">@dshs.kr로 끝나는 구글 계정으로만<br>인증할 수 있습니다.</p>
+                    </div>
+                    <div class="card">
+                        <h1 style="color: rgb(217, 233, 0);">계정 이름</h1>
+                        <p style="width: 100px; margin-top: 10px;">구글 계정에 설정된 사용자 이름과<br>회원가입시 기입한 이름이 서로<br>동일해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="errcode">{{errcode}}</p>
+
+            <button id="Login-btn" onclick="javascript:location.href = '/googleauth'">
+                <img class="g-img" src="{{url_for('static', filename='img/search.svg')}}"
+                    alt="google">
+                <h2>로그인</h2>
+            </button>
+        </div>
+    </div>
+</body>
+    <script src="{{url_for('static', filename='js/load.js')}}"></script>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식 관리 시스템</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+
+<body>
+    <div class="body-frame"
+        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="header-blank"></div>
+        <div class="center-div">
+            <div class="coin">
+                <div class="front"></div>
+                <div class="back"></div>
+                <div class="side">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+
+            <div class="center-div" style="margin-top: 60px; width: 90%; text-align: center;">
+                <h3 class="b4 f2" style="color: rgb(78, 78, 78);">대전대신고등학교</h3><br>
+                <h1 class="b8 f7">{{errcode}}</h1>
+                <p style="margin-top: 5px;">정상적으로 접근 하였을 경우,<br>아래 문의하기 버튼을 눌러주세요.</p>
+                <button class="f2 b7" style="margin-top: 20px; margin-bottom: 20px; max-width: 700px; width: 90%;" onclick="javascript:channel();">
+                    <img src="{{url_for('static', filename='img/phone-call.png')}}" style="height: 40%; filter: invert(1); margin-right: 10px;">
+                    문의하기
+                </button>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+<script>
+    function channel() {
+        location.href = 'http://pf.kakao.com/_fxcIxhb';
+    } 
+</script>
+<script src="{{url_for('static', filename='js/load.js')}}"></script>
+</html>

@@ -1,0 +1,15 @@
+
+
+button > img {
+    width: 20px;
+    filter: invert(1);
+    margin-right: 10px;
+}
+
+.reg-btn {
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+    color: grey;
+}
+

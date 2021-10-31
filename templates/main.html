@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식 관리 시스템</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/logo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <div class="body-frame">
+        <header>
+        </header>
+        <div class="header-blank"></div>
+        <div class="block">
+            <div class="center-div">
+                <div class="coin">
+                    <div class="front"></div>
+                    <div class="back"></div>
+                    <div class="side">
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                
+            </div>
+            <div class="title" style="margin-top: 60px;">
+                <h1 class="b4 f2" style="margin-bottom:10px; color: rgb(78, 78, 78);">대전대신고등학교</h1>
+                <h1 class="b8 f7">QR코드 급식<br>관리 시스템</h1>
+            </div>
+            <div class="login-box" style="margin-top: 20px;">
+                <form action="/" method="POST">
+                    <input name="ID" type="text" placeholder="아이디를 입력하세요." maxlength="20">
+                    <input name="PW" type="password" placeholder="비밀번호를 입력하세요." maxlength="20">
+                    <p class="errcode">{{errcode}}</p>
+                    <button class="f2 b7">
+                        <img src="{{url_for('static', filename='img/qr-code.png')}}">
+                        QR코드 받기</button>
+                </form>
+            </div>
+            <a href="/register" class="reg-btn f1">회원가입하기</a>
+        </div>
+    </div>
+</body>
+    <script src="{{url_for('static', filename='js/load.js')}}"></script>
+</html>

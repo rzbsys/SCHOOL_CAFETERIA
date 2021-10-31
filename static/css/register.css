@@ -1,0 +1,26 @@
+.card {
+    width: calc(90% - 60px);
+    padding: 40px 30px;
+    margin: 0px 5%;
+    height: 180px;
+    background-color: white;
+    border-radius: 10px;
+    display: inline-block;
+    scroll-snap-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 200%;
+}
+
+
+.parell-scroll {
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    height: 270px;
+}

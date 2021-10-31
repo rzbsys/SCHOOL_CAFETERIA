@@ -1,0 +1,135 @@
+:root {
+    --background : #f5f5f7;
+    --width-margin : 40px;
+    --header-height : 50px;
+    --light-blue:#CDD1FF;
+    --blue:#3C4DFF;
+    --light-green:#DBFFCF;
+    --green:#8EFF69;
+    --mint:#0CD49C;
+}
+
+html * {
+    padding: 0px;
+    margin: 0px;
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+body {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: var(--background);
+}
+
+button {
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+    border: 0px;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 5px;
+    color: white;
+    background-color: var(--mint);
+    box-shadow: 0px 0px 8px -15px grey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn {
+    margin-top: 10px;
+    color: grey;
+    cursor: pointer;
+}
+
+.body-frame {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    top: 0px;
+    width: 100vw;
+    height: -webkit-fill-available;
+    position: fixed;
+    background-color: var(--background);
+    max-width: 700px;
+}
+
+html *::-webkit-scrollbar {
+    display: none;
+}
+
+
+.block {
+    width: calc(100% - var(--width-margin));
+    position: relative;
+    left: 50%;
+    margin-left: calc(-1 * (100% - var(--width-margin)) / 2);
+}
+
+header {
+    width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.center-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-blank {
+    height: var(--header-height);
+}
+
+.errcode {
+    display: block;
+    text-align: center;
+    color: red;
+    font-size: 0.8em;
+}
+
+input[type=text], input[type=password], input[type=tel] {
+    width: calc(100% - 40px);
+    padding: 0px 20px;
+    margin: 10px 0px;
+    height: 55px;
+    background-color: white;
+    border: 0px;
+    backdrop-filter: blur(50px);
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -15px black;
+}
+
+.b1 {font-weight: 100;}
+.b2 {font-weight: 200;}
+.b3 {font-weight: 300;}
+.b4 {font-weight: 400;}
+.b5 {font-weight: 500;}
+.b6 {font-weight: 600;}
+.b7 {font-weight: 700;}
+.b8 {font-weight: 800;}
+.b9 {font-weight: 900;}
+
+.f1{font-size: 0.7em;}
+.f2{font-size: 1em;}
+.f3{font-size: 1.3em;}
+.f4{font-size: 1.6em;}
+.f5{font-size: 1.9em;}
+.f6{font-size: 2.2em;}
+.f7{font-size: 2.5em;}
+.f8{font-size: 2.8em;}
+.f9{font-size: 3.1em;}
+
+.shadow {
+    box-shadow: 0px 0px 15px -14px black;
+}
