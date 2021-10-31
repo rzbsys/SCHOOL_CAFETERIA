@@ -25,7 +25,7 @@ TOKEN_EXPIRE_TIME = 300
 #MongoDB 설정
 #나중에 IP추가
 ca = certifi.where()
-murl = 'mongodb+srv://admin:admin@cluster0.uzwiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+murl = 'mongodb+srv://admin:admin@cluster0.uzwiu.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-12shb0-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
 clientmg = MongoClient(murl, connect=False, tlsCAFile=ca)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
