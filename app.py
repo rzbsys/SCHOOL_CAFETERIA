@@ -23,12 +23,10 @@ userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
 
 TOKEN_EXPIRE_TIME = 300
 #MongoDB 설정
-#나중에 IP추가
+#IP WhiteList
 ca = certifi.where()
-murl = 'mongodb://localhost:27017'
-clientmg = MongoClient(murl, connect=False, 
-#tlsCAFile=ca
-)
+murl = 'mongodb+srv://dsmeal:admin@dsmeal.x4cwh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+clientmg = MongoClient(murl, connect=False, tlsCAFile=ca)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
