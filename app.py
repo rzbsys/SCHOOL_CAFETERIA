@@ -73,8 +73,6 @@ def login(id, pw):
         return render_template('main.html', errcode='비밀번호가 일치하지 않습니다.')
 
     session['Try'] = 0
-    if IDlist[0]['WhiteList'] == False:
-        return render_template('err.html', errcode='급식 신청이 확인되지 않아, QR코드를 생성할 수 없습니다.')
 
     session['ID'] = id
     session['PW'] = pw    
@@ -84,6 +82,12 @@ def login(id, pw):
         if str(errmsg) == 'None':
             errmsg = ''
         return render_template('glogin.html', errcode=errmsg)
+
+    if IDlist[0]['WhiteList'] == False:
+        session.clear()
+        return render_template('err.html', errcode='급식 신청이 확인되지 않아, QR코드를 생성할 수 없습니다.')
+
+
     return render_template('qr.html')
 
 
