@@ -25,8 +25,10 @@ TOKEN_EXPIRE_TIME = 300
 #MongoDB 설정
 #나중에 IP추가
 ca = certifi.where()
-murl = 'mongodb+srv://admin:admin@cluster0.uzwiu.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-12shb0-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
-clientmg = MongoClient(murl, connect=False, tlsCAFile=ca)
+murl = 'mongodb://localhost:27017'
+clientmg = MongoClient(murl, connect=False, 
+#tlsCAFile=ca
+)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
@@ -62,10 +64,8 @@ def login(id, pw):
         session['Try'] = 0
     else:
         session['Try'] = session['Try'] + 1
-    
     if session['Try'] >= 30:
         return render_template('err.html', errcode='최대 로그인 시도 횟수를 초과하였습니다.')
-
     if id == '' or pw == '':
         return render_template('main.html', errcode='어떠한 칸에도 공백이 존재할 수 없습니다.')
     IDlist = list(db['user'].find({'ID' : id}))
@@ -73,9 +73,13 @@ def login(id, pw):
         return render_template('main.html', errcode='아이디가 존재하지 않습니다.')
     if IDlist[0]['PW'] != pw:
         return render_template('main.html', errcode='비밀번호가 일치하지 않습니다.')
-    session['ID'] = id
-    session['PW'] = pw
+
     session['Try'] = 0
+    if IDlist[0]['WhiteList'] == False:
+        return render_template('err.html', errcode='급식 신청이 확인되지 않아, QR코드를 생성할 수 없습니다.')
+
+    session['ID'] = id
+    session['PW'] = pw    
 
     if IDlist[0]['GoogleAuth'] == False:
         errmsg = request.args.get('err')
@@ -96,6 +100,28 @@ def glogin():
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)
+
+@app.route('/survey', methods=['GET', 'POST'])
+def survey():
+    Qlist = list(db['survey'].find())
+    if request.method == 'GET':
+        return render_template('survey.html', Qlist=Qlist, enumerate=enumerate)
+    else:
+        if 'Survey' in session:
+            return render_template('pass.html', succode='이미 설문에 참여하셨습니다.')
+
+        answer = request.form
+        print(list(answer))
+        print(Qlist[0])
+
+        if len(answer) != len(Qlist):
+            return render_template('survey.html', Qlist=Qlist, enumerate=enumerate, errcode='모든 문항에 응답해 주세요.')
+        for i in range(len(answer)):
+            state = list(answer)[i][0]
+            before_val = Qlist[i][state]
+            db['survey'].update({'NUM': i + 1},{'$set': {state:before_val + 1}})    
+        session['Survey'] = 1
+        return render_template('pass.html', succode='설문 결과가 정상적으로 처리되었습니다.')
 
 #구글 로그인
 @app.route('/callback')
@@ -195,8 +221,7 @@ def add_user():
     if pw != pwr:
         return render_template('register1.html', errcode='비밀번호가 서로 일치하지 않습니다.')
     if len(tel) != 11:
-        return render_template('register1.html', errcode='전화번호를 사용할 수 없습니다.')
-    
+        return render_template('register1.html', errcode='전화번호를 사용할 수 없습니다.')    
     if len(list(db['user'].find({'ID' : id}))) != 0:
         return render_template('register1.html', errcode='동일한 아이디가 이미 존재합니다.')
 

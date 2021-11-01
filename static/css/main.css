@@ -13,3 +13,18 @@ button > img {
     color: grey;
 }
 
+.survey-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mint);
+    width: 120px;
+    height: 35px;
+    border-radius: 300px;
+    cursor: pointer;
+    z-index: 100;
+    background-color: white;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}

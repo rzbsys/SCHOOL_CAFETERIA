@@ -1,0 +1,35 @@
+.survey-grid {
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    margin-top: 10px;
+    right: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input[type=checkbox] + label {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(230, 230, 230);
+    transition: 0.4s;
+}
+
+
+.Ybtn:checked + label {
+    background-color: var(--blue);
+    color: white;
+}
+
+.Nbtn:checked + label {
+    background-color: red;
+    color: white;
+}

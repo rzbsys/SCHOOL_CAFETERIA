@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식 관리 시스템</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/survey.css')}}">
+</head>
+
+<body>
+    <div class="body-frame">
+        <div class="block">
+            <h1 class="back-btn b3" onclick="javascript:location.href = '/';">←</h1>
+            <img src="{{url_for('static', filename='img/dshslogo.png')}}" width="70px" style="margin-top: 20px;">
+            <h1 class="b8 f6" style="margin-top: 20px;">설문조사</h1>
+            <p style="color: grey; margin-top: 10px;">현 대전대신고등학교 급식 현황을<br>파악하기 위한 설문조사입니다.</p>
+        </div>
+        <div class="block" style="margin-top: 20px; margin-bottom: 20px;">
+            <form action="/survey" method="POST" style="position: relative;">
+                {% for i, v in enumerate(Qlist) %}
+                <div style="margin-bottom: 70px;">
+                    <h2 class="b6 f3" style="width: 80%"><span class="b9 f3">Q{{i + 1}}</span> {{v['Question']}}</h2>
+                    <label for="q{{i}}"></label>
+                    <div class="survey-grid">
+                        <input type="checkbox" name="Y{{i}}" style="display: none;" id="q{{i}}-Y" class="Ybtn" onclick="javascript:clk({{i}}, true);">
+                        <label for="q{{i}}-Y" class="survey-btn b8 Ybtn-sub">Y</label>
+
+                        <input type="checkbox" name="N{{i}}" style="display: none;" id="q{{i}}-N" class="Nbtn" onclick="javascript:clk({{i}}, false);">
+                        <label for="q{{i}}-N" class="survey-btn b8 Nbtn-sub">N</label>
+
+                    </div>
+                </div>
+                {% endfor %}
+                <p class="errcode">{{errcode}}</p>
+                <button class="f2 b7">제출하기</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+<script src="{{url_for('static', filename='js/load.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+<script src="{{url_for('static', filename='js/survey.js')}}"></script>
+
+</html>
