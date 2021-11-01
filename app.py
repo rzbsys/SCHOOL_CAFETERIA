@@ -98,7 +98,7 @@ def glogin():
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri=request.host_url.replace('http://', 'http://') + "callback",
+        redirect_uri=request.host_url.replace('http://', 'https://') + "callback",
         scope=["openid", "email", "profile"],
     )
     return redirect(request_uri)
@@ -133,8 +133,8 @@ def getUser():
     token_endpoint = google_provider_cfg["token_endpoint"]
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
-        authorization_response=request.url.replace('http://', 'http://'),
-        redirect_url=request.host_url.replace('http://', 'http://') + "callback",
+        authorization_response=request.url.replace('http://', 'https://'),
+        redirect_url=request.host_url.replace('http://', 'https://') + "callback",
         code=code
     )
     
