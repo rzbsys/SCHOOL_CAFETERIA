@@ -21,7 +21,7 @@ authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 token_endpoint = google_provider_cfg["token_endpoint"]
 userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
 
-TOKEN_EXPIRE_TIME = 300
+TOKEN_EXPIRE_TIME = 30
 #MongoDB 설정
 #IP WhiteList
 ca = certifi.where()
