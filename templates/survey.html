@@ -35,6 +35,9 @@
 
                     </div>
                 </div>
+                {% if i + 1 != len(Qlist) %}
+                <hr class="hr">
+                {% endif %}
                 {% endfor %}
                 <p class="errcode">{{errcode}}</p>
                 <button class="f2 b7">제출하기</button>

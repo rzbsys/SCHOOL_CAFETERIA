@@ -107,7 +107,7 @@ def glogin():
 def survey():
     Qlist = list(db['survey'].find())
     if request.method == 'GET':
-        return render_template('survey.html', Qlist=Qlist, enumerate=enumerate)
+        return render_template('survey.html', Qlist=Qlist, enumerate=enumerate, len=len)
     else:
         if 'Survey' in session:
             return render_template('pass.html', succode='이미 설문에 참여하셨습니다.')
@@ -117,7 +117,7 @@ def survey():
         print(Qlist[0])
 
         if len(answer) != len(Qlist):
-            return render_template('survey.html', Qlist=Qlist, enumerate=enumerate, errcode='모든 문항에 응답해 주세요.')
+            return render_template('survey.html', Qlist=Qlist, enumerate=enumerate, errcode='모든 문항에 응답해 주세요.', len=len)
         for i in range(len(answer)):
             state = list(answer)[i][0]
             before_val = Qlist[i][state]
