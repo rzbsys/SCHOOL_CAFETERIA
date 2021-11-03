@@ -37,9 +37,9 @@ function extended_check() {
         },
         error: function (err) {
             $('.left-time').text('새로고침 실패');
+            clearInterval(timer);
+            clearInterval(extend_timer);
             setTimeout(() => {
-                clearInterval(timer);
-                clearInterval(extend_timer);
                 location.href = '/';
             }, 2000);
         }
@@ -52,10 +52,10 @@ function check_refresh() {
     var left_min = parseInt((EXPIRE_TIME - Cal_time) / 60);
     var left_sec = parseInt((EXPIRE_TIME - Cal_time) % 60);
     $('.left-time').text(zero(left_min) + ':' + zero(left_sec));
-    clearInterval(extend_timer);
     if (left_min <= 0 && left_sec <= 0) {
         $('.left-time').text('새로고침 대기중');
         clearInterval(timer);
+        clearInterval(extend_timer);
         extend_timer = setInterval(extended_check, 5000);
     }
 }
@@ -89,15 +89,13 @@ function get_token() {
         },
         error: function (err) {
             $('.left-time').text('서버 통신 불가');
+            clearInterval(timer);
+            clearInterval(extend_timer);
             setTimeout(() => {
-                clearInterval(timer);
-                clearInterval(extend_timer);
                 location.href = '/';
             }, 2000);
         }
     }); 
 }
-
-
 
 get_token();

@@ -35,7 +35,6 @@ def e1(msg):
 def e2(msg):
     return render_template('err.html', errcode='서버 내부 오류입니다.')
 
-
 def hashstring(string):
     hash_string = string
     for i in range(10):
