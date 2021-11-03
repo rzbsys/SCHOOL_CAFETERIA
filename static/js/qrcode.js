@@ -37,6 +37,11 @@ function extended_check() {
         },
         error: function (err) {
             $('.left-time').text('새로고침 실패');
+            setTimeout(() => {
+                clearInterval(timer);
+                clearInterval(extend_timer);
+                location.href = '/';
+            }, 2000);
         }
     }); 
 }
@@ -85,6 +90,8 @@ function get_token() {
         error: function (err) {
             $('.left-time').text('서버 통신 불가');
             setTimeout(() => {
+                clearInterval(timer);
+                clearInterval(extend_timer);
                 location.href = '/';
             }, 2000);
         }
