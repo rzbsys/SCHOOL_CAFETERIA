@@ -16,6 +16,7 @@ function zero(a) {
 
 function refresh() {
     clearInterval(timer);
+    clearInterval(extend_timer);
     $('.left-time').text('새로고침');
     get_token();
 }
@@ -46,6 +47,7 @@ function check_refresh() {
     var left_sec = parseInt((EXPIRE_TIME - Cal_time) % 60);
     $('.left-time').text(zero(left_min) + ':' + zero(left_sec));
     if (left_min <= 0 && left_sec <= 0) {
+        $('.left-time').text('새로고침 대기중');
         clearInterval(timer);
         extend_timer = setInterval(extended_check, 5000);
     }
