@@ -22,6 +22,7 @@ function refresh() {
 }
 
 function extended_check() {
+    console.log('Get Refresh Token!!');
     $('.left-time').text('새로고침 대기중');
     before_value = now;
     $.ajax({
@@ -46,6 +47,7 @@ function check_refresh() {
     var left_min = parseInt((EXPIRE_TIME - Cal_time) / 60);
     var left_sec = parseInt((EXPIRE_TIME - Cal_time) % 60);
     $('.left-time').text(zero(left_min) + ':' + zero(left_sec));
+    clearInterval(extend_timer);
     if (left_min <= 0 && left_sec <= 0) {
         $('.left-time').text('새로고침 대기중');
         clearInterval(timer);
@@ -54,6 +56,7 @@ function check_refresh() {
 }
 
 function get_token() {
+    console.log('Get Token!!');
     $.ajax({
         url: '/getusertoken',
         type: 'POST',
@@ -80,7 +83,10 @@ function get_token() {
             timer = setInterval(check_refresh, 1000);
         },
         error: function (err) {
-            alert('서버와 통신할 수 없습니다.');
+            $('.left-time').text('서버 통신 불가');
+            setTimeout(() => {
+                location.href = '/';
+            }, 2000);
         }
     }); 
 }

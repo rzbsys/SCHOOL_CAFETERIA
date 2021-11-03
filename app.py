@@ -23,7 +23,7 @@ userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
 #MongoDB 설정
 #IP WhiteList
 ca = certifi.where()
-clientmg = MongoClient(MONGODB_URL, connect=False, tlsCAFile=ca)
+clientmg = MongoClient(MONGODB_URL, tlsCAFile=ca)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
@@ -146,12 +146,9 @@ def getUser():
     uri, headers, body = client.add_token(userinfo_endpoint)
     userinfo_response = requests.get(uri, headers=headers, data=body)
 
-
     unique_id = userinfo_response.json()["sub"]
     users_name = userinfo_response.json()["name"]
     users_email = userinfo_response.json()["email"]
-
-
 
     IDlist = list(db['user'].find({'ID' : session['ID']}))
     if users_email.split('@')[-1] != 'dshs.kr':
