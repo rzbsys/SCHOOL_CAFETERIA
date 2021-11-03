@@ -3,6 +3,7 @@ import secrets, hashlib, requests, os, json, certifi
 from pymongo import MongoClient
 from datetime import timedelta, datetime
 from oauthlib.oauth2 import WebApplicationClient
+from var import *
 
 RANDOM_SECRET_KEY = secrets.token_urlsafe(16)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -10,8 +11,6 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = RANDOM_SECRET_KEY    
 
-GOOGLE_CLIENT_ID = '1074884255177-45kp30rm524dfbjmjoo928oq1qbcb26f.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = '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'
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 app.config['GOOGLE_OAUTH2_CLIENT_ID'] = GOOGLE_CLIENT_ID
 app.config['GOOGLE_OAUTH2_CLIENT_SECRET'] = GOOGLE_CLIENT_SECRET
@@ -21,12 +20,10 @@ authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 token_endpoint = google_provider_cfg["token_endpoint"]
 userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
 
-TOKEN_EXPIRE_TIME = 30
 #MongoDB 설정
 #IP WhiteList
 ca = certifi.where()
-murl = 'mongodb+srv://dsmeal:admin@dsmeal.x4cwh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-clientmg = MongoClient(murl, connect=False, tlsCAFile=ca)
+clientmg = MongoClient(MONGODB_URL, connect=False, tlsCAFile=ca)
 db = clientmg['dshs']
 db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
