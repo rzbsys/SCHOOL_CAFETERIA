@@ -29,6 +29,10 @@ function extended_check() {
         url: '/getusertoken',
         type: 'POST',
         success: function (data) {
+            if (data['RES'] == 'Fail') {
+                location.href = '/err?msg=' + data['MSG'];
+                return;
+            }
             after_value = data['res'];
             if (after_value != before_value) {
                 clearInterval(extend_timer);
@@ -66,6 +70,10 @@ function get_token() {
         url: '/getusertoken',
         type: 'POST',
         success: function (data) {
+            if (data['RES'] == 'Fail') {
+                location.href = '/err?msg=' + data['MSG'];
+                return;
+            }
             Start_Time = new Date();
             const Date_info = data['expire'].split(' ');
             const Hour_Min_Sec = Date_info[4].split(':')

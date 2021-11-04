@@ -29,11 +29,11 @@ db['token'].create_index("createdAt", expireAfterSeconds=TOKEN_EXPIRE_TIME)
 
 @app.errorhandler(404)
 def e1(msg):
-    return render_template('err.html', errcode='잘못된 접근입니다.')
+    return render_template('err.html', errcode='잘못된 접근입니다.', KAKAO_LINK=KAKAO_LINK)
 
 @app.errorhandler(500)
 def e2(msg):
-    return render_template('err.html', errcode='서버 내부 오류입니다.')
+    return render_template('err.html', errcode='서버 내부 오류입니다.', KAKAO_LINK=KAKAO_LINK)
 
 def hashstring(string):
     hash_string = string
@@ -59,7 +59,7 @@ def login(id, pw):
     else:
         session['Try'] = session['Try'] + 1
     if session['Try'] >= 30:
-        return render_template('err.html', errcode='최대 로그인 시도 횟수를 초과하였습니다.')
+        return render_template('err.html', errcode='최대 로그인 시도 횟수를 초과하였습니다.', KAKAO_LINK=KAKAO_LINK)
     if id == '' or pw == '':
         return render_template('main.html', errcode='어떠한 칸에도 공백이 존재할 수 없습니다.')
     IDlist = list(db['user'].find({'ID' : id}))
@@ -69,7 +69,6 @@ def login(id, pw):
         return render_template('main.html', errcode='비밀번호가 일치하지 않습니다.')
 
     session['Try'] = 0
-
     session['ID'] = id
     session['PW'] = pw    
 
@@ -81,9 +80,7 @@ def login(id, pw):
 
     if IDlist[0]['WhiteList'] == False:
         session.clear()
-        return render_template('err.html', errcode='급식 신청이 확인되지 않아, QR코드를 생성할 수 없습니다.')
-
-
+        return render_template('err.html', errcode='급식 신청이 확인되지 않아, QR코드를 생성할 수 없습니다.', KAKAO_LINK=KAKAO_LINK)
     return render_template('qr.html')
 
 
@@ -106,7 +103,7 @@ def survey():
         return render_template('survey.html', Qlist=Qlist, enumerate=enumerate, len=len)
     else:
         if 'Survey' in session:
-            return render_template('pass.html', succode='이미 설문에 참여하셨습니다.')
+            return render_template('pass.html', succode='이미 설문에 참여하셨습니다.', KAKAO_LINK=KAKAO_LINK)
 
         answer = request.form
         print(list(answer))
@@ -119,7 +116,7 @@ def survey():
             before_val = Qlist[i][state]
             db['survey'].update({'NUM': i + 1},{'$set': {state:before_val + 1}})    
         session['Survey'] = 1
-        return render_template('pass.html', succode='설문 결과가 정상적으로 처리되었습니다.')
+        return render_template('pass.html', succode='설문 결과가 정상적으로 처리되었습니다.', KAKAO_LINK=KAKAO_LINK)
 
 #구글 로그인
 @app.route('/callback')
@@ -133,7 +130,6 @@ def getUser():
         redirect_url=request.host_url.replace('http://', 'https://') + "callback",
         code=code
     )
-    
     token_response = requests.post(
         token_url,
         headers=headers,
@@ -158,13 +154,23 @@ def getUser():
     db['user'].update({'ID': session['ID']},{'$set': {'GoogleAuth': True, 'UID': unique_id, 'EMAIL':users_email}}, upsert=False)    
     return redirect('/')
 
+@app.route('/err')
+def errmsg():
+    msg = request.args.get('msg')
+    return render_template('pass.html', succode=msg)
+
+
 @app.route('/getusertoken', methods=['POST'])
 def gettoken():
     if 'ID' not in session:
-        return redirect('/')
+        return jsonify({'RES':'Fail', 'MSG':'로그인 세션이 만료되었습니다.'})
     Tokenlist = list(db['token'].find({'ID' : session['ID']}))
+    Histlist = list(db['token'].find({'ID' : session['ID']}))
+    if len(Histlist) > 1:
+        session.clear()
+        return jsonify({'RES':'Fail', 'MSG':'이미 QR코드를 사용하였습니다.'})
     if len(Tokenlist) >= 1:
-        return jsonify({'res':Tokenlist[0]['TOKEN'], 'expire':change_tz(Tokenlist[0]['createdAt']), 'duration':TOKEN_EXPIRE_TIME})
+        return jsonify({'RES':'Suc', 'res':Tokenlist[0]['TOKEN'], 'expire':change_tz(Tokenlist[0]['createdAt']), 'duration':TOKEN_EXPIRE_TIME})
     else:
         IDlist = list(db['user'].find({'ID' : session['ID']}))
         uid = IDlist[0]['UID']
@@ -172,7 +178,7 @@ def gettoken():
         New_Token = uid + str(random_string)
         Hashed_Token = hashstring(New_Token)
         db['token'].insert_one({'ID': session['ID'], 'NAME': IDlist[0]['NAME'], 'TOKEN':Hashed_Token, 'createdAt': get_time()[0]})    
-        return jsonify({'res':Hashed_Token, 'expire':get_time()[1], 'duration':TOKEN_EXPIRE_TIME})
+        return jsonify({'RES':'Suc', 'res':Hashed_Token, 'expire':get_time()[1], 'duration':TOKEN_EXPIRE_TIME})
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
