@@ -1,4 +1,3 @@
-
 var EXPIRE_TIME = 0;
 var timer, Start_Time, now, extend_timer, before_value, after_value;
 

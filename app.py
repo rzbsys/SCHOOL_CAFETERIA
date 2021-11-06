@@ -165,10 +165,11 @@ def gettoken():
     if 'ID' not in session:
         return jsonify({'RES':'Fail', 'MSG':'로그인 세션이 만료되었습니다.'})
     Tokenlist = list(db['token'].find({'ID' : session['ID']}))
-    Histlist = list(db['token'].find({'ID' : session['ID']}))
-    if len(Histlist) > 1:
+    Histlist = list(db['hist'].find({'ID' : session['ID']}))
+    if len(Histlist) >= 1:
         session.clear()
         return jsonify({'RES':'Fail', 'MSG':'이미 QR코드를 사용하였습니다.'})
+    print(Tokenlist)
     if len(Tokenlist) >= 1:
         return jsonify({'RES':'Suc', 'res':Tokenlist[0]['TOKEN'], 'expire':change_tz(Tokenlist[0]['createdAt']), 'duration':TOKEN_EXPIRE_TIME})
     else:
